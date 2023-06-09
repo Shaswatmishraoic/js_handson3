@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Promise Async Await</h1>
+    <p>1.Write one example explaining how you can write a callback function.</p>
+    <p>ANS. A callback function is a function that is passed as an argument to another function and gets executed at a later point in time, usually when an asynchronous operation completes or a certain event occurs. It allows you to define the logic that should be executed after the completion of an operation. Callback functions are a common pattern in JavaScript for handling asynchronous code.</p>
+    <pre>
+        function multiplyNumbers(a, b, callback) {
+            if (typeof a !== 'number' || typeof b !== 'number') {
+              callback("Invalid arguments. Please provide numbers.");
+            } else {
+              const result = a * b;
+              callback(null, result); 
+            }
+          }
+          
+          function handleResult(error, result) {
+            if (error) {
+              console.error("An error occurred:", error);
+            } else {
+              console.log("Result:", result);
+            }
+          }
+          
+          multiplyNumbers(5, 2, handleResult);
+    </pre>
+    <p>In this example, we define the multiplyNumbers function that takes two numbers (a and b) and a callback function (callback). The function multiplies the numbers together and calls the callback function with an error or the result of the multiplication.
+
+        We also define the handleResult callback function, which takes two parameters: error and result. If an error occurs, it is logged to the console. Otherwise, the result is logged.
+        
+        We call the multiplyNumbers function with the arguments 5, 2, and handleResult as the callback function. This means that once the multiplication is done, the handleResult function will be invoked with the error or the result.</p>
+        <hr>
+    <p>2."Write a callback function to print numbers from 1 to 7, in which 1 should be printed after 1 sec, 2 should be printed after 2 sec, 3 should be printed after 3 sec, and so on. 
+
+        Explain callback hell.
+        Numbers
+        1
+        2
+        3
+        4
+        5
+        6
+        7"</p>
+        <pre> ANS.
+            setTimeout(()=>{
+                console.log("1");
+                setTimeout(()=>{
+                    console.log("2");
+                    setTimeout(()=>{
+                        console.log("3");
+                        setTimeout(()=>{
+                            console.log("4");
+                            setTimeout(()=>{
+                                console.log("5");
+                                setTimeout(()=>{
+                                    console.log("6")
+                                    setTimeout(()=>{
+                                        console.log("7")
+                                    },7000);
+                                },6000);
+                            },5000);
+                        },4000);
+                    },3000);
+                },2000);
+            },1000);
+        </pre>
+       <p>This is the program and it work as a callback hell.Callback functions allow you to define custom behavior or logic that will be executed at a certain point in your code, such as after an asynchronous operation completes or when an error occurs. They provide a way to handle and process data or errors in a flexible and customizable manner.</p>
+    <pre>
+        <hr>
+        3."Write the promise function to print numbers from 1 to 7, in which 1 should be printed after 1 sec, 2 should be printed after 2 sec, 3 should be printed after 3 sec, and so on. 
+
+        Numbers
+        1
+        2
+        3
+        4
+        5
+        6
+        7"
+    </pre>
+    <pre>ANS.
+        function printNumberWithDelay(number, delay) {
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                console.log(number);
+                resolve();
+              }, delay);
+            });
+          }
+          
+          function printNumbersWithDelays() {
+            let delay = 1000;
+          
+            for (let i = 1; i <= 7; i++) {
+              printNumberWithDelay(i, delay);
+              delay += 1000;
+            }
+          }
+          
+          printNumbersWithDelays();
+    </pre>
+    <p>In this example, the printNumberWithDelay function returns a promise. It uses setTimeout to introduce a delay before logging the number to the console. After the delay, the promise is resolved.
+
+        The printNumbersWithDelays function iterates from 1 to 7 and calls printNumberWithDelay for each number, passing the number and the current delay as arguments. The delay is increased by 1 second for each subsequent number, ensuring that the numbers are printed with the desired delays.</p>
+        <hr>
+    <p>4."Create a promise function accepting an argument, if yes is passed to the function then it should go to resolved state and print Promise Resolved, and if nothing is passed 
+        then it should go to reject the state and catch the error and print Promise Rejected "</p>
+    <pre>
+        ANS. function processPromise(arg) {
+            return new Promise((resolve, reject) => {
+              if (arg === "yes") {
+                resolve("Promise Resolved");
+              } else {
+                reject(new Error("Promise Rejected"));
+              }
+            });
+          }
+          
+          // Example usage:
+          processPromise("yes")
+            .then(result => {
+              console.log(result);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+          
+          processPromise()
+            .then(result => {
+              console.log(result);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+    </pre>
+    <p>In this example, the processPromise function takes an argument arg and returns a promise. If the argument value is "yes", the promise is resolved with the message "Promise Resolved". Otherwise, it is rejected with an Error object containing the message "Promise Rejected".
+
+        To handle the promise, we use the .then method to handle the resolved state and log the result to the console. If the promise is rejected, we use the .catch method to handle the error and log it to the console.
+        
+        In the example usage, we call processPromise with the argument "yes" and handle the resolved promise case, printing "Promise Resolved". Then, we call processPromise without an argument and handle the rejected promise case, catching the error and printing "Promise Rejected".</p>
+        <hr>
+    <p>5.Create examples to explain callback function</p>
+    <p>ANS. Callback functions allow you to define custom behavior or logic that will be executed at a certain point in your code, such as after an asynchronous operation completes or when an error occurs. They provide a way to handle and process data or errors in a flexible and customizable manner.</p>
+    <pre>
+        function divideNumbers_(a, b, successCallback, errorCallback) {
+            if (b === 0) {
+              errorCallback("Division by zero error.");
+            } else {
+              const result = a / b;
+              successCallback(result);
+            }
+          }
+          
+          function handleSuccess(result) {
+            console.log("Result:", result);
+          }
+          
+          function handleError(error) {
+            console.error("An error occurred:", error);
+          }
+          
+          divideNumbers_(10, 5, handleSuccess, handleError);
+          divideNumbers_(8, 0, handleSuccess, handleError);
+    </pre>
+    <hr>
+    <p>6.Create examples to explain callback hell function</p>
+    <p>Callback hell, also known as the pyramid of doom, refers to a situation where multiple nested callback functions are used, leading to code that becomes hard to read and maintain. 
+        The problem with this approach is that as the number of nested asynchronous operations increases, the code becomes deeply nested and difficult to read. This can lead to maintenance issues, such as understanding the control flow and managing error handling.
+    </p>
+    <pre>
+        setTimeout(()=>{
+            console.log("1");
+            setTimeout(()=>{
+                console.log("2");
+                setTimeout(()=>{
+                    console.log("3");
+                    setTimeout(()=>{
+                        console.log("4");
+                        setTimeout(()=>{
+                            console.log("5");
+                            setTimeout(()=>{
+                                console.log("6")
+                                setTimeout(()=>{
+                                    console.log("7")
+                                },7000);
+                            },6000);
+                        },5000);
+                    },4000);
+                },3000);
+            },2000);
+        },1000);
+    </pre>
+    <hr>
+    <p>7.Create examples to explain promises function</p>
+    <p>ANS.Promises provide a way to handle asynchronous operations in JavaScript and allow us to write cleaner and more readable code by avoiding deeply nested callbacks. They simplify error handling and provide a consistent pattern for handling success and failure cases.</p>
+    <pre>
+        function divideNumbers(a, b) {
+            return new Promise((resolve, reject) => {
+              if (b === 0) {
+                reject("Division by zero error."); // Reject the promise if division by zero is attempted
+              } else {
+                const result = a / b;
+                resolve(result); // Resolve the promise with the result of division
+              }
+            });
+          }
+          
+          // Consuming the promise
+          divideNumbers(10, 5)
+            .then(result => console.log(result))
+            .catch(error => console.error(error));
+    </pre>
+    <p>n this example, we define a divideNumbers function that takes two parameters a and b. Inside the function, we create a new Promise. If the b parameter is zero, we reject the promise with an error message. Otherwise, we perform the division and resolve the promise with the result.
+
+        We consume the promise by calling the divideNumbers function with appropriate arguments and using .then() and .catch() methods to handle the resolved value or error message.</p>
+        <hr>
+    <p>8.Create examples to explain async await function</p>
+    <p>ANS.Async/await functions provide a more concise and synchronous-like way to handle asynchronous operations in JavaScript. The async keyword is used to define a function as asynchronous, and the await keyword is used to pause the execution and wait for the resolution of a promise.</p>
+    <pre>
+        function divideNumber(a, b) {
+            return new Promise((resolve, reject) => {
+              if (b === 0) {
+                reject("Division by zero error."); 
+              } else {
+                const result = a / b;
+                resolve(result); 
+              }
+            });
+          }
+          
+          async function performDivision() {
+            try {
+              const result = await divideNumber(10, 5);
+              console.log(result);
+            } catch (error) {
+              console.error(error);
+            }
+          }
+          performDivision();
+    </pre>
+    <p>In this example, we define a divideNumbers function that returns a promise, similar to the previous example. We also define an async function called performDivision. Inside this function, we use the await keyword to pause the execution until the promise returned by divideNumbers is resolved or rejected.
+
+        If the promise is resolved, the result of the division is assigned to the result variable, and we log it to the console. If the promise is rejected, the error message is caught in the catch block and logged to the console.</p>
+        <hr>
+    <p>9.Create examples to explain promise.all function</p>
+    <pre>
+        function multiplyNumbers(a, b) {
+            return new Promise((resolve, reject) => {
+              if (typeof a !== 'number' || typeof b !== 'number') {
+                reject("Invalid arguments. Please provide numbers."); // Reject the promise if arguments are not numbers
+              } else {
+                const result = a * b;
+                resolve(result); 
+              }
+            });
+          }
+          
+          const promise1 = multiplyNumbers(5, 2);
+          const promise2 = multiplyNumbers(3, 4);
+          const promise3 = multiplyNumbers(7, 1);
+          
+          Promise.all([promise1, promise2, promise3])
+            .then(results => {
+              console.log("All promises resolved:");
+              results.forEach(result => console.log(result));
+            })
+            .catch(error => {
+              console.error("An error occurred:", error);
+            });
+    </pre>
+    <p>In this example, we define the multiplyNumbers function, which returns a promise that multiplies two numbers together. If the arguments are not numbers, the promise is rejected with an error message.
+
+        We create three promises (promise1, promise2, and promise3) by calling multiplyNumbers with different numbers.
+        
+        We pass an array of these promises to Promise.all, which waits for all the promises to resolve. Once all the promises are resolved, the .then callback is executed, and we receive an array of results in the same order as the input promises. We log the results to the console.
+        
+        If any of the promises reject, the .catch callback is executed with the first encountered error.</p>
+    <script src="./index.js"></script>
+</body>
+</html>

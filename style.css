@@ -1,0 +1,12 @@
+pre{
+    color: blue;
+}
+body{
+    background-color: lightgray;
+}
+h1{
+    color: white;
+    font-weight: bolder;
+    text-decoration: underline;
+    text-align: center;
+}
